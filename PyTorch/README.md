@@ -185,3 +185,40 @@ tensor([6., 6., 6., 6., 6.])
 ```
 ## Note
 - In-place operations save some memory, but can be problematic when computing derivatives because of an immediate loss of history. Hence, their use is discouraged.
+
+## Bridge with NumPy
+Tensors on the CPU and NumPy arrays can share their underlying memory locations, and changing one will change the other.
+
+### Tensor to NumPy array
+```python
+t = torch.ones(5)
+print(t)
+n = t.numpy()
+print(n)
+```
+Output:
+```tensor([1., 1., 1., 1., 1.])
+array([1., 1., 1., 1., 1.])
+```
+A change in the tensor reflects in the NumPy array.
+```python
+t.add_(1)
+print(t)
+print(n)
+```
+Output:
+```tensor([2., 2., 2., 2., 2.])
+array([2., 2., 2., 2., 2.])
+```
+
+### NumPy array to Tensor
+```python
+n = np.ones(5)
+print(n)
+t = torch.from_numpy(n)
+print(t)
+```
+Output:
+```array([1., 1., 1., 1., 1.])
+tensor([1., 1., 1., 1., 1.])
+``` 
